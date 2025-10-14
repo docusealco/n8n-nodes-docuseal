@@ -1,0 +1,21 @@
+{
+	"node": "n8n-nodes-base.docusealTrigger",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Productivity"],
+	"resources": {
+		"generic": [
+			{
+				"label": "DocuSeal Webhooks Documentation",
+				"icon": "🔔",
+				"url": "https://www.docuseal.com/docs/api#form-webhook"
+			},
+			{
+				"label": "DocuSeal API Reference",
+				"icon": "🔌",
+				"url": "https://www.docuseal.com/docs/api"
+			}
+		]
+	},
+	"alias": ["webhook", "event", "document", "signature"]
+}

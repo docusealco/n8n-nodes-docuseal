@@ -1,0 +1,21 @@
+{
+	"node": "n8n-nodes-base.docuseal",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Productivity"],
+	"resources": {
+		"generic": [
+			{
+				"label": "DocuSeal Official Documentation",
+				"icon": "📄",
+				"url": "https://www.docuseal.com/docs"
+			},
+			{
+				"label": "DocuSeal API Reference",
+				"icon": "🔌",
+				"url": "https://www.docuseal.com/docs/api"
+			}
+		]
+	},
+	"alias": ["esignature", "document", "signature", "pdf"]
+}
