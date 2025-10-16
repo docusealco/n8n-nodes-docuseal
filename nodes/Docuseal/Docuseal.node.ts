@@ -183,16 +183,17 @@ async function createSubmission(
     payload.message = { subject: emailSubject, body: emailBody } as IDataObject;
   }
 
-  const submittersUi = this.getNodeParameter('submittersUi', i, {}) as {
+  const submitters = this.getNodeParameter('submitters', i, {}) as {
     submitter?: Array<IDataObject>;
   };
 
   const submittersPayload: IDataObject[] = [];
 
-  for (const entry of submittersUi.submitter ?? []) {
+  for (const entry of submitters.submitter ?? []) {
     const sub: IDataObject = {};
 
     for (const key of [
+      'role',
       'name',
       'email',
       'phone',
@@ -287,26 +288,26 @@ async function createSubmissionFromDocx(
     payload.template_ids = templateIds.split(',').map((id) => id.trim());
   }
 
-  const variablesUi = this.getNodeParameter('variables', i, {}) as {
+  const variablesCollection = this.getNodeParameter('variables', i, {}) as {
     pair?: Array<{ key: string; value: string }>;
   };
 
-  if (variablesUi.pair && variablesUi.pair.length) {
+  if (variablesCollection.pair && variablesCollection.pair.length) {
     const variables: IDataObject = {};
 
-    for (const { key, value } of variablesUi.pair) {
+    for (const { key, value } of variablesCollection.pair) {
       if (key) variables[key] = value;
     }
 
     payload.variables = variables;
   }
 
-  const documentsUi = this.getNodeParameter('documents', i, {}) as {
+  const documents = this.getNodeParameter('documents', i, {}) as {
     document?: Array<IDataObject>;
   };
 
-  if (documentsUi.document && documentsUi.document.length) {
-    payload.documents = documentsUi.document.map((doc) => {
+  if (documents.document && documents.document.length) {
+    payload.documents = documents.document.map((doc) => {
       const document: IDataObject = {};
       if (doc.name) document.name = doc.name;
       if (doc.file) document.file = doc.file;
@@ -363,12 +364,12 @@ async function createSubmissionFromHtml(
     payload.template_ids = templateIds.split(',').map((id) => id.trim());
   }
 
-  const documentsUi = this.getNodeParameter('documents', i, {}) as {
+  const documents = this.getNodeParameter('documents', i, {}) as {
     document?: Array<IDataObject>;
   };
 
-  if (documentsUi.document && documentsUi.document.length) {
-    payload.documents = documentsUi.document.map((doc) => {
+  if (documents.document && documents.document.length) {
+    payload.documents = documents.document.map((doc) => {
       const document: IDataObject = {};
       if (doc.name) document.name = doc.name;
       if (doc.html) document.html = doc.html;
@@ -432,12 +433,12 @@ async function createSubmissionFromPdf(
     payload.template_ids = templateIds.split(',').map((id) => id.trim());
   }
 
-  const documentsUi = this.getNodeParameter('documents', i, {}) as {
+  const documents = this.getNodeParameter('documents', i, {}) as {
     document?: Array<IDataObject>;
   };
 
-  if (documentsUi.document && documentsUi.document.length) {
-    payload.documents = documentsUi.document.map((doc) => {
+  if (documents.document && documents.document.length) {
+    payload.documents = documents.document.map((doc) => {
       const document: IDataObject = {};
       if (doc.name) document.name = doc.name;
       if (doc.file) document.file = doc.file;
@@ -462,13 +463,13 @@ async function createSubmissionFromPdf(
 }
 
 function processSubmitters(this: IExecuteFunctions, i: number): IDataObject[] {
-  const submittersUi = this.getNodeParameter('submitters', i, {}) as {
+  const submitters = this.getNodeParameter('submitters', i, {}) as {
     submitter?: Array<IDataObject>;
   };
 
   const submittersPayload: IDataObject[] = [];
 
-  for (const entry of submittersUi.submitter ?? []) {
+  for (const entry of submitters.submitter ?? []) {
     const sub: IDataObject = {};
 
     for (const key of [

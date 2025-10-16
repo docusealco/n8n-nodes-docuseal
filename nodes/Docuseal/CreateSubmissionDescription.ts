@@ -122,7 +122,7 @@ export const createSubmissionDescription: INodeProperties[] = [
   {
     displayName: 'Expire At',
     name: 'expireAt',
-    type: 'string',
+    type: 'dateTime',
     default: '',
     description: 'Expiration datetime (ISO 8601). After this the submission becomes unavailable for signing.',
     displayOptions: {
@@ -133,9 +133,10 @@ export const createSubmissionDescription: INodeProperties[] = [
   },
   {
     displayName: 'Submitters',
-    name: 'submittersUi',
+    name: 'submitters',
     placeholder: 'Add Submitter',
     type: 'fixedCollection',
+    required: true,
     typeOptions: {
       multipleValues: true,
     },
@@ -156,7 +157,9 @@ export const createSubmissionDescription: INodeProperties[] = [
             displayName: 'Email',
             name: 'email',
             type: 'string',
+            required: true,
             placeholder: 'Enter email address',
+            description: 'Signer email',
             default: '',
           },
           {
@@ -239,6 +242,14 @@ export const createSubmissionDescription: INodeProperties[] = [
             name: 'send_sms',
             type: 'boolean',
             default: false,
+          },
+          {
+            displayName: 'Signer Role',
+            name: 'role',
+            type: 'string',
+            required: true,
+            default: '',
+            description: 'Role of the signer',
           },
           {
             displayName: 'Values (Pre-Fill Fields)',

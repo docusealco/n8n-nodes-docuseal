@@ -128,9 +128,10 @@ export const createSubmissionFromHtmlDescription: INodeProperties[] = [
             displayName: 'Email',
             name: 'email',
             type: 'string',
-            placeholder: 'name@email.com',
-            default: '',
+            required: true,
+            placeholder: 'Enter email address',
             description: 'Signer email',
+            default: '',
           },
           {
             displayName: 'External ID',
@@ -383,7 +384,7 @@ export const createSubmissionFromHtmlDescription: INodeProperties[] = [
   {
     displayName: 'Expire At',
     name: 'expireAt',
-    type: 'string',
+    type: 'dateTime',
     default: '',
     description: 'Expiration datetime (ISO 8601). After this the submission becomes unavailable for signing.',
     displayOptions: {

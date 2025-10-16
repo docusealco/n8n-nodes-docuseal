@@ -116,9 +116,10 @@ export const createSubmissionFromDocxDescription: INodeProperties[] = [
             displayName: 'Email',
             name: 'email',
             type: 'string',
-            default: '',
-            placeholder: 'name@email.com',
+            required: true,
+            placeholder: 'Enter email address',
             description: 'Signer email',
+            default: '',
           },
           {
             displayName: 'External ID',
@@ -371,7 +372,7 @@ export const createSubmissionFromDocxDescription: INodeProperties[] = [
   {
     displayName: 'Expire At',
     name: 'expireAt',
-    type: 'string',
+    type: 'dateTime',
     default: '',
     description: 'Expiration datetime (ISO 8601). After this the submission becomes unavailable for signing.',
     displayOptions: {
