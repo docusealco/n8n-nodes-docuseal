@@ -107,13 +107,22 @@ export class Docuseal implements INodeType {
   methods = {
     loadOptions: {
       async getTemplates(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
-        const response = await apiRequest.call(this, 'GET', '/templates', {}, { per_page: 50 });
+        const currentValue = this.getCurrentNodeParameter('templateId') as string;
+
+        const qs: IDataObject = { per_page: 50 };
+
+        if (currentValue && typeof currentValue === 'string' && currentValue.length > 0) {
+          qs.q = currentValue;
+        }
+
+        const response = await apiRequest.call(this, 'GET', '/templates', {}, qs);
         const list: Array<{ id: number; name: string }> = response?.data || [];
+
         return list.map((t) => ({
           name: `${t.name} (${t.id})`,
           value: t.id,
         }));
-      },
+      }
     },
   };
 
@@ -200,23 +209,35 @@ async function createSubmission(
       }
     }
 
-    if (entry.values && (entry.values as any).pair) {
-      const dict: Array<{ field: string; value: string }> = (entry.values as any).pair;
-      if (Array.isArray(dict) && dict.length) {
-        sub.values = dict
-          .filter(({ field }) => field && field !== '')
-          .map(({ field, value }) => ({ field, value }));
+    const valuesData = entry.values as any;
+
+    if (valuesData && valuesData.pair && Array.isArray(valuesData.pair)) {
+      const pairs = valuesData.pair as Array<{ field: string; value: string }>;
+
+      if (pairs.length) {
+        const values: IDataObject = {};
+
+        for (const { field, value } of pairs) {
+          if (field) values[field] = value;
+        }
+
+        sub.values = values;
       }
     }
 
-    if (entry.metadata && (entry.metadata as any).pair) {
-      const pairs: Array<{ key: string; value: string }> = (entry.metadata as any).pair;
-      if (Array.isArray(pairs) && pairs.length) {
-        const md: IDataObject = {};
+    const metadataData = entry.metadata as any;
+
+    if (metadataData && metadataData.pair && Array.isArray(metadataData.pair)) {
+      const pairs = metadataData.pair as Array<{ key: string; value: string }>;
+
+      if (pairs.length) {
+        const metadata: IDataObject = {};
+
         for (const { key, value } of pairs) {
-          if (key) md[key] = value;
+          if (key) metadata[key] = value;
         }
-        sub.metadata = md;
+
+        sub.metadata = metadata;
       }
     }
 
@@ -272,9 +293,11 @@ async function createSubmissionFromDocx(
 
   if (variablesUi.pair && variablesUi.pair.length) {
     const variables: IDataObject = {};
+
     for (const { key, value } of variablesUi.pair) {
       if (key) variables[key] = value;
     }
+
     payload.variables = variables;
   }
 
@@ -466,23 +489,35 @@ function processSubmitters(this: IExecuteFunctions, i: number): IDataObject[] {
       }
     }
 
-    if (entry.values && (entry.values as any).pair) {
-      const dict: Array<{ field: string; value: string }> = (entry.values as any).pair;
-      if (Array.isArray(dict) && dict.length) {
-        sub.values = dict
-          .filter(({ field }) => field && field !== '')
-          .map(({ field, value }) => ({ field, value }));
+    const valuesData = entry.values as any;
+
+    if (valuesData && valuesData.pair && Array.isArray(valuesData.pair)) {
+      const pairs = valuesData.pair as Array<{ field: string; value: string }>;
+
+      if (pairs.length) {
+        const values: IDataObject = {};
+
+        for (const { field, value } of pairs) {
+          if (field) values[field] = value;
+        }
+
+        sub.values = values;
       }
     }
 
-    if (entry.metadata && (entry.metadata as any).pair) {
-      const pairs: Array<{ key: string; value: string }> = (entry.metadata as any).pair;
-      if (Array.isArray(pairs) && pairs.length) {
-        const md: IDataObject = {};
+    const metadataData = entry.metadata as any;
+
+    if (metadataData && metadataData.pair && Array.isArray(metadataData.pair)) {
+      const pairs = metadataData.pair as Array<{ key: string; value: string }>;
+
+      if (pairs.length) {
+        const metadata: IDataObject = {};
+
         for (const { key, value } of pairs) {
-          if (key) md[key] = value;
+          if (key) metadata[key] = value;
         }
-        sub.metadata = md;
+
+        sub.metadata = metadata;
       }
     }
 
@@ -495,6 +530,7 @@ function processSubmitters(this: IExecuteFunctions, i: number): IDataObject[] {
 function cleanPayload(payload: IDataObject): void {
   Object.keys(payload).forEach((k) => {
     const v = payload[k];
+
     if (v === '' || v === null || v === undefined) {
       delete payload[k];
     }

@@ -16,6 +16,7 @@ export const createSubmissionFromDocxDescription: INodeProperties[] = [
   {
     displayName: 'Variables',
     name: 'variables',
+    placeholder: 'Add Variable',
     type: 'fixedCollection',
     typeOptions: {
       multipleValues: true,
@@ -129,8 +130,13 @@ export const createSubmissionFromDocxDescription: INodeProperties[] = [
           {
             displayName: 'Metadata',
             name: 'metadata',
+            placeholder: 'Add Key/Value',
             type: 'fixedCollection',
+            typeOptions: {
+              multipleValues: true,
+            },
             default: {},
+            description: 'Metadata key-value pairs',
             options: [
               {
                 name: 'pair',
@@ -212,15 +218,20 @@ export const createSubmissionFromDocxDescription: INodeProperties[] = [
           {
             displayName: 'Values (Pre-Fill Fields)',
             name: 'values',
+            placeholder: 'Add Field Name/Value',
             type: 'fixedCollection',
+            typeOptions: {
+              multipleValues: true,
+            },
             default: {},
+            description: 'Field values to pre-fill for this signer',
             options: [
               {
                 name: 'pair',
                 displayName: 'Field Value',
                 values: [
                   {
-                    displayName: 'Field',
+                    displayName: 'Field Name',
                     name: 'field',
                     type: 'string',
                     default: '',

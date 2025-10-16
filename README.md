@@ -141,7 +141,7 @@ You'll need your **DocuSeal API key** to connect n8n to your account.
 
 ### Getting Your API Key
 
-1. Create an account at [DocuSeal Global Dashboard](https://docuseal.com/sign_in) or [DocuSeal Europe Dashboard](https://docuseal.eu/sign_in)
+1. Create an account at [DocuSeal Global](https://docuseal.com/sign_in) or [DocuSeal Europe](https://docuseal.eu/sign_in)
 2. Go to **Settings → Console → API**
 3. Copy an API key for your account
 
