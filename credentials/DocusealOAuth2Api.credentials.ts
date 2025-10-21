@@ -8,16 +8,16 @@ export class DocusealOAuth2Api implements ICredentialType {
 	documentationUrl = 'https://www.docuseal.com/docs/api';
 
 	properties: INodeProperties[] = [
-		 {
-      displayName: 'Cloud Region',
-      name: 'cloudRegion',
-      type: 'options',
-      default: 'com',
-      options: [
-        { name: 'Global', value: 'com' },
-        { name: 'Europe', value: 'eu' },
-      ],
-    },
+		{
+			displayName: 'Cloud Region',
+			name: 'cloudRegion',
+			type: 'options',
+			default: 'com',
+			options: [
+				{ name: 'Global', value: 'com' },
+				{ name: 'Europe', value: 'eu' },
+			],
+		},
 		{
 			displayName: 'Grant Type',
 			name: 'grantType',
@@ -42,19 +42,13 @@ export class DocusealOAuth2Api implements ICredentialType {
 			displayName: 'Scope',
 			name: 'scope',
 			type: 'hidden',
-			default: 'repo',
-		},
-		{
-			displayName: 'Auth URI Query Parameters',
-			name: 'authQueryParameters',
-			type: 'hidden',
-			default: '',
+			default: 'read write',
 		},
 		{
 			displayName: 'Authentication',
 			name: 'authentication',
 			type: 'hidden',
-			default: 'header',
-		},
+			default: 'body',
+		}
 	];
 }

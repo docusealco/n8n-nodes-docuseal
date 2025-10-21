@@ -55,8 +55,8 @@ async function requestWithAuth(
 	req: IHttpRequestOptions,
 ): Promise<any> {
 	if (auth === 'oAuth2') {
-		return this.helpers.httpRequestWithAuthentication!.call(this, 'docusealOAuth2Api', req);
+		return this.helpers.httpRequestWithAuthentication.call(this, 'docusealOAuth2Api', req);
 	} else {
-		return this.helpers.httpRequestWithAuthentication!.call(this, 'docusealApi', req);
+		return this.helpers.httpRequestWithAuthentication.call(this, 'docusealApi', req);
 	}
 }

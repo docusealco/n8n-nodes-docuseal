@@ -249,19 +249,19 @@ Set expiration dates for signature requests:
 
 ## Troubleshooting
 
-### Common Issues
+### 🧩 Common Issues
 
-**Issue**: "Invalid API Key" error
-**Solution**: Verify your API key is correct and matches the selected server (Global/Europe)
+#### 🔑 Invalid API Key error
+**Solution:** Verify your API key is correct and matches the selected server (Global/Europe)
 
-**Issue**: Template not found
-**Solution**: Ensure the template exists in your DocuSeal account and is not archived
+#### 📄 Template not found
+**Solution:** Ensure the template exists in your DocuSeal account and is not archived
 
-**Issue**: Webhook not triggering
-**Solution**: Check that your n8n instance is publicly accessible and the webhook is properly registered
+#### 🌐 Webhook not triggering
+**Solution:** Check that your n8n instance is publicly accessible and the webhook is properly registered
 
-**Issue**: Documents not merging
-**Solution**: Verify that all documents are valid PDFs or DOCX files and properly encoded
+#### 📚 Documents not merging
+**Solution:** Verify that all documents are valid PDFs or DOCX files and properly encoded
 
 ### Getting Help
 
