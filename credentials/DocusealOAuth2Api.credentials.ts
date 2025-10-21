@@ -4,7 +4,10 @@ export class DocusealOAuth2Api implements ICredentialType {
 	name = 'docusealOAuth2Api';
 	extends = ['oAuth2Api'];
 	displayName = 'DocuSeal OAuth2 API';
-	icon: Icon = { light: 'file:../nodes/Docuseal/logo.svg', dark: 'file:../nodes/Docuseal/logo.svg' };
+	icon: Icon = {
+		light: 'file:../nodes/Docuseal/logo.svg',
+		dark: 'file:../nodes/Docuseal/logo.svg',
+	};
 	documentationUrl = 'https://www.docuseal.com/docs/api';
 
 	properties: INodeProperties[] = [
@@ -28,14 +31,16 @@ export class DocusealOAuth2Api implements ICredentialType {
 			displayName: 'Authorization URL',
 			name: 'authUrl',
 			type: 'hidden',
-			default: "={{$self.cloudRegion === 'eu' ? 'https://docuseal.eu/oauth/authorize' : 'https://docuseal.com/oauth/authorize'}}",
+			default:
+				"={{$self.cloudRegion === 'eu' ? 'https://docuseal.eu/oauth/authorize' : 'https://docuseal.com/oauth/authorize'}}",
 			required: true,
 		},
 		{
 			displayName: 'Access Token URL',
 			name: 'accessTokenUrl',
 			type: 'hidden',
-			default: "={{$self.cloudRegion === 'eu' ? 'https://docuseal.eu/oauth/token' : 'https://docuseal.com/oauth/token'}}",
+			default:
+				"={{$self.cloudRegion === 'eu' ? 'https://docuseal.eu/oauth/token' : 'https://docuseal.com/oauth/token'}}",
 			required: true,
 		},
 		{
@@ -49,6 +54,6 @@ export class DocusealOAuth2Api implements ICredentialType {
 			name: 'authentication',
 			type: 'hidden',
 			default: 'body',
-		}
+		},
 	];
 }

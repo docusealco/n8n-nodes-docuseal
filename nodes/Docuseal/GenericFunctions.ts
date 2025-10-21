@@ -40,7 +40,9 @@ async function resolveBaseUrl(
 	auth: string,
 ): Promise<string> {
 	if (auth === 'oAuth2') {
-		const creds = (await this.getCredentials('docusealOAuth2Api')) as { cloudRegion?: 'com' | 'eu' };
+		const creds = (await this.getCredentials('docusealOAuth2Api')) as {
+			cloudRegion?: 'com' | 'eu';
+		};
 		return creds?.cloudRegion === 'eu' ? 'https://api.docuseal.eu' : 'https://api.docuseal.com';
 	} else {
 		const creds = (await this.getCredentials('docusealApi')) as { baseUrl?: string };
