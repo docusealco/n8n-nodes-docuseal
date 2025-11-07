@@ -114,6 +114,13 @@ export const createSubmissionFromDocxDescription: INodeProperties[] = [
 				displayName: 'Signer',
 				values: [
 					{
+						displayName: 'Completed (Auto-Sign)',
+						name: 'completed',
+						type: 'boolean',
+						default: false,
+						description: 'Whether to mark signer as completed and auto-signed via API',
+					},
+					{
 						displayName: 'Email',
 						name: 'email',
 						type: 'string',
