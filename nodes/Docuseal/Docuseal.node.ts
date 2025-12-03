@@ -2,6 +2,7 @@ import type {
 	IDataObject,
 	IExecuteFunctions,
 	ILoadOptionsFunctions,
+	INodeExecutionData,
 	INodePropertyOptions,
 	INodeType,
 	INodeTypeDescription,
@@ -128,7 +129,7 @@ export class Docuseal implements INodeType {
 
 	async execute(this: IExecuteFunctions) {
 		const items = this.getInputData();
-		const returnData: IDataObject[] = [];
+		const returnData: INodeExecutionData[] = [];
 		const length = items.length || 1;
 
 		for (let i = 0; i < length; i++) {
@@ -136,20 +137,20 @@ export class Docuseal implements INodeType {
 
 			if (operation === 'createSubmission') {
 				const data = await createSubmission.call(this, i);
-				returnData.push(data);
+				returnData.push({ json: data, pairedItem: { item: i } });
 			} else if (operation === 'createSubmissionFromDocx') {
 				const data = await createSubmissionFromDocx.call(this, i);
-				returnData.push(data);
+				returnData.push({ json: data, pairedItem: { item: i } });
 			} else if (operation === 'createSubmissionFromHtml') {
 				const data = await createSubmissionFromHtml.call(this, i);
-				returnData.push(data);
+				returnData.push({ json: data, pairedItem: { item: i } });
 			} else if (operation === 'createSubmissionFromPdf') {
 				const data = await createSubmissionFromPdf.call(this, i);
-				returnData.push(data);
+				returnData.push({ json: data, pairedItem: { item: i } });
 			}
 		}
 
-		return [this.helpers.returnJsonArray(returnData)];
+		return [returnData];
 	}
 }
 

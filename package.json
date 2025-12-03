@@ -1,6 +1,6 @@
 {
   "name": "@docuseal/n8n-nodes-docuseal",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "n8n nodes for DocuSeal eSignature platform",
   "keywords": [
     "n8n-community-node-package",
