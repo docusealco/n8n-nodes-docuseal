@@ -22,7 +22,7 @@ export class Docuseal implements INodeType {
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Interact with DocuSeal API',
+		description: 'Create, send, and sign documents',
 		defaults: {
 			name: 'DocuSeal',
 		},
