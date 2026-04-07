@@ -181,6 +181,20 @@ async function createSubmission(this: IExecuteFunctions, i: number): Promise<IDa
 		payload.message = { subject: emailSubject, body: emailBody } as IDataObject;
 	}
 
+	const variablesCollection = this.getNodeParameter('variables', i, {}) as {
+		pair?: Array<{ key: string; value: string }>;
+	};
+
+	if (variablesCollection.pair && variablesCollection.pair.length) {
+		const variables: IDataObject = {};
+
+		for (const { key, value } of variablesCollection.pair) {
+			if (key) variables[key] = value;
+		}
+
+		payload.variables = variables;
+	}
+
 	const submitters = this.getNodeParameter('submitters', i, {}) as {
 		submitter?: Array<IDataObject>;
 	};

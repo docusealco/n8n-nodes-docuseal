@@ -22,8 +22,7 @@ export const createSubmissionFromDocxDescription: INodeProperties[] = [
 			multipleValues: true,
 		},
 		default: {},
-		description:
-			'Dynamic content variables object. Variable values can be strings, numbers, arrays, objects, or HTML content.',
+		description: 'Dynamic content variables. Variable values can be strings, numbers, arrays, objects, or HTML content used to generate styled text, paragraphs, and tables in DOCX.',
 		options: [
 			{
 				name: 'pair',
@@ -41,7 +40,7 @@ export const createSubmissionFromDocxDescription: INodeProperties[] = [
 						name: 'value',
 						type: 'string',
 						default: '',
-						description: 'Variable value (can be string, number, or HTML)',
+						description: 'Variable value (can be string, number, array, object, or HTML content)'
 					},
 				],
 			},

@@ -137,6 +137,44 @@ export const createSubmissionDescription: INodeProperties[] = [
 		},
 	},
 	{
+		displayName: 'Variables',
+		name: 'variables',
+		placeholder: 'Add Variable',
+		type: 'fixedCollection',
+		typeOptions: {
+			multipleValues: true,
+		},
+		default: {},
+		description: 'Dynamic content variables. Variable values can be strings, numbers, arrays, objects, or HTML content used to generate styled text, paragraphs, and tables in dynamic template documents.',
+		options: [
+			{
+				name: 'pair',
+				displayName: 'Variable',
+				values: [
+					{
+						displayName: 'Key',
+						name: 'key',
+						type: 'string',
+						default: '',
+						description: 'Variable name',
+					},
+					{
+						displayName: 'Value',
+						name: 'value',
+						type: 'string',
+						default: '',
+						description: 'Variable value (can be string, number, array, object, or HTML content)'
+					},
+				],
+			},
+		],
+		displayOptions: {
+			show: {
+				operation: ['createSubmission'],
+			},
+		},
+	},
+	{
 		displayName: 'Submitters',
 		name: 'submitters',
 		placeholder: 'Add Submitter',
