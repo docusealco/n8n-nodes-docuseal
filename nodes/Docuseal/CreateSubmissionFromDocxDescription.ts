@@ -98,7 +98,7 @@ export const createSubmissionFromDocxDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Submitters',
+		displayName: 'Signers',
 		name: 'submitters',
 		placeholder: 'Add Signer',
 		type: 'fixedCollection',
@@ -193,6 +193,13 @@ export const createSubmissionFromDocxDescription: INodeProperties[] = [
 						type: 'string',
 						default: '',
 						description: 'Reply-To address to use in the notification emails for this signer',
+					},
+					{
+						displayName: 'Require Email 2FA',
+						name: 'require_email_2fa',
+						type: 'boolean',
+						default: false,
+						description: 'Whether to require email 2FA verification via a one-time code',
 					},
 					{
 						displayName: 'Require Phone 2FA',

@@ -114,6 +114,17 @@ Create signature requests from PDF documents.
 - Merge multiple PDFs
 - Template integration
 
+#### Update Signer
+Update an existing signer, pre-fill or update field values and re-send emails.
+
+**Features:**
+- Update signer name, email and phone
+- Pre-fill or update form field values
+- Re-send the signature request via email or SMS
+- Mark the signer as completed and auto-signed
+- Require phone or email 2FA to access documents
+- Only the fields you add are sent, everything else stays unchanged
+
 ### DocuSeal Trigger Node
 
 Webhook-based trigger for DocuSeal events.
@@ -216,7 +227,7 @@ Send documents requiring multiple signatures in sequence:
 
 ### Pre-filling Form Fields
 
-You can pre-fill form fields in your templates using the `Values` parameter in submitters:
+You can pre-fill form fields in your templates using the `Values` parameter in signers:
 
 ```json
 {

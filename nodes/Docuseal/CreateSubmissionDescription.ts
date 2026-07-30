@@ -71,7 +71,7 @@ export const createSubmissionDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Submitters Order',
+		displayName: 'Signers Order',
 		name: 'order',
 		type: 'options',
 		options: [
@@ -175,9 +175,9 @@ export const createSubmissionDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Submitters',
+		displayName: 'Signers',
 		name: 'submitters',
-		placeholder: 'Add Submitter',
+		placeholder: 'Add Signer',
 		type: 'fixedCollection',
 		required: true,
 		typeOptions: {
@@ -185,11 +185,11 @@ export const createSubmissionDescription: INodeProperties[] = [
 		},
 		default: {},
 		description:
-			'Define each signer (submitter) and their options. Order here matches the send order when order=preserved.',
+			'Define each signer and their options. Order here matches the send order when order=preserved.',
 		options: [
 			{
 				name: 'submitter',
-				displayName: 'Submitter',
+				displayName: 'Signer',
 				values: [
 					{
 						displayName: 'Completed (Auto-Sign)',
@@ -267,6 +267,13 @@ export const createSubmissionDescription: INodeProperties[] = [
 						name: 'reply_to',
 						type: 'string',
 						default: '',
+					},
+					{
+						displayName: 'Require Email 2FA',
+						name: 'require_email_2fa',
+						type: 'boolean',
+						default: false,
+						description: 'Whether to require email 2FA via one-time code to access documents',
 					},
 					{
 						displayName: 'Require Phone 2FA',

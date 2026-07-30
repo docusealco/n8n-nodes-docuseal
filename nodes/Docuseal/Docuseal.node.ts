@@ -13,6 +13,7 @@ import { createSubmissionDescription } from './CreateSubmissionDescription';
 import { createSubmissionFromDocxDescription } from './CreateSubmissionFromDocxDescription';
 import { createSubmissionFromHtmlDescription } from './CreateSubmissionFromHtmlDescription';
 import { createSubmissionFromPdfDescription } from './CreateSubmissionFromPdfDescription';
+import { updateSubmitterDescription } from './UpdateSubmitterDescription';
 
 export class Docuseal implements INodeType {
 	description: INodeTypeDescription = {
@@ -96,12 +97,19 @@ export class Docuseal implements INodeType {
 						description: 'Create a signature request from PDF document',
 						action: 'Create submission from PDF',
 					},
+					{
+						name: 'Update Signer',
+						value: 'updateSubmitter',
+						description: 'Update signer details, pre-fill field values and re-send emails',
+						action: 'Update signer',
+					},
 				],
 			},
 			...createSubmissionDescription,
 			...createSubmissionFromDocxDescription,
 			...createSubmissionFromHtmlDescription,
 			...createSubmissionFromPdfDescription,
+			...updateSubmitterDescription,
 		],
 	};
 
@@ -146,6 +154,9 @@ export class Docuseal implements INodeType {
 				returnData.push({ json: data, pairedItem: { item: i } });
 			} else if (operation === 'createSubmissionFromPdf') {
 				const data = await createSubmissionFromPdf.call(this, i);
+				returnData.push({ json: data, pairedItem: { item: i } });
+			} else if (operation === 'updateSubmitter') {
+				const data = await updateSubmitter.call(this, i);
 				returnData.push({ json: data, pairedItem: { item: i } });
 			}
 		}
@@ -212,6 +223,7 @@ async function createSubmission(this: IExecuteFunctions, i: number): Promise<IDa
 			'send_email',
 			'send_sms',
 			'require_phone_2fa',
+			'require_email_2fa',
 			'completed_redirect_url',
 			'reply_to',
 			'external_id',
@@ -465,6 +477,75 @@ async function createSubmissionFromPdf(this: IExecuteFunctions, i: number): Prom
 	return data as IDataObject;
 }
 
+async function updateSubmitter(this: IExecuteFunctions, i: number): Promise<IDataObject> {
+	const submitterId = this.getNodeParameter('submitterId', i) as string;
+	const fields = this.getNodeParameter('updateFields', i, {}) as IDataObject;
+
+	const payload: IDataObject = {};
+
+	const keys: Array<[string, string]> = [
+		['name', 'name'],
+		['email', 'email'],
+		['phone', 'phone'],
+		['completed', 'completed'],
+		['sendEmail', 'send_email'],
+		['sendSms', 'send_sms'],
+		['requirePhone2fa', 'require_phone_2fa'],
+		['requireEmail2fa', 'require_email_2fa'],
+		['completedRedirectUrl', 'completed_redirect_url'],
+		['replyTo', 'reply_to'],
+		['externalId', 'external_id'],
+	];
+
+	for (const [param, key] of keys) {
+		if (fields[param] !== undefined && fields[param] !== '') {
+			payload[key] = fields[param];
+		}
+	}
+
+	const valuesData = fields.values as any;
+
+	if (valuesData && valuesData.pair && Array.isArray(valuesData.pair)) {
+		const pairs = valuesData.pair as Array<{ field: string; value: string }>;
+
+		if (pairs.length) {
+			const values: IDataObject = {};
+
+			for (const { field, value } of pairs) {
+				if (field) values[field] = value;
+			}
+
+			payload.values = values;
+		}
+	}
+
+	const metadataData = fields.metadata as any;
+
+	if (metadataData && metadataData.pair && Array.isArray(metadataData.pair)) {
+		const pairs = metadataData.pair as Array<{ key: string; value: string }>;
+
+		if (pairs.length) {
+			const metadata: IDataObject = {};
+
+			for (const { key, value } of pairs) {
+				if (key) metadata[key] = value;
+			}
+
+			payload.metadata = metadata;
+		}
+	}
+
+	const emailSubject = (fields.emailSubject as string) || '';
+	const emailBody = (fields.emailBody as string) || '';
+
+	if (emailSubject && emailBody) {
+		payload.message = { subject: emailSubject, body: emailBody };
+	}
+
+	const data = await apiRequest.call(this, 'PUT', `/submitters/${submitterId}`, payload);
+	return data as IDataObject;
+}
+
 function processSubmitters(this: IExecuteFunctions, i: number): IDataObject[] {
 	const submitters = this.getNodeParameter('submitters', i, {}) as {
 		submitter?: Array<IDataObject>;
@@ -483,6 +564,7 @@ function processSubmitters(this: IExecuteFunctions, i: number): IDataObject[] {
 			'send_email',
 			'send_sms',
 			'require_phone_2fa',
+			'require_email_2fa',
 			'completed_redirect_url',
 			'reply_to',
 			'external_id',
