@@ -137,6 +137,8 @@ export class DocusealTrigger implements INodeType {
 					try {
 						await apiRequest.call(this, 'DELETE', `/webhook_urls/${webhookData.webhookId}`, {}, {});
 					} catch (error) {
+						this.logger.error('DocuSeal: failed to delete webhook', { error });
+
 						return false;
 					}
 
