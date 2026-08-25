@@ -7,7 +7,7 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-
+import { NodeConnectionTypes } from 'n8n-workflow';
 import { apiRequest } from './GenericFunctions';
 import { createSubmissionDescription } from './CreateSubmissionDescription';
 import { createSubmissionFromDocxDescription } from './CreateSubmissionFromDocxDescription';
@@ -19,16 +19,17 @@ export class Docuseal implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'DocuSeal',
 		name: 'docuseal',
-		icon: 'file:logo.svg',
+		icon: { light: 'file:logo.svg', dark: 'file:logo.dark.svg' },
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Create, send, and sign documents',
+		usableAsTool: true,
 		defaults: {
 			name: 'DocuSeal',
 		},
-		inputs: ['main'],
-		outputs: ['main'],
+		inputs: [NodeConnectionTypes.Main],
+		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
 				name: 'docusealOAuth2Api',
@@ -125,7 +126,7 @@ export class Docuseal implements INodeType {
 				}
 
 				const response = await apiRequest.call(this, 'GET', '/templates', {}, qs);
-				const list: Array<{ id: number; name: string }> = response?.data || [];
+				const list = (response?.data ?? []) as Array<{ id: number; name: string }>;
 
 				return list.map((t) => ({
 					name: `${t.name} (${t.id})`,
@@ -234,10 +235,10 @@ async function createSubmission(this: IExecuteFunctions, i: number): Promise<IDa
 			}
 		}
 
-		const valuesData = entry.values as any;
+		const valuesData = entry.values as { pair?: Array<{ field: string; value: string }> } | undefined;
 
-		if (valuesData && valuesData.pair && Array.isArray(valuesData.pair)) {
-			const pairs = valuesData.pair as Array<{ field: string; value: string }>;
+		if (valuesData?.pair && Array.isArray(valuesData.pair)) {
+			const pairs = valuesData.pair;
 
 			if (pairs.length) {
 				const values: IDataObject = {};
@@ -250,10 +251,10 @@ async function createSubmission(this: IExecuteFunctions, i: number): Promise<IDa
 			}
 		}
 
-		const metadataData = entry.metadata as any;
+		const metadataData = entry.metadata as { pair?: Array<{ key: string; value: string }> } | undefined;
 
-		if (metadataData && metadataData.pair && Array.isArray(metadataData.pair)) {
-			const pairs = metadataData.pair as Array<{ key: string; value: string }>;
+		if (metadataData?.pair && Array.isArray(metadataData.pair)) {
+			const pairs = metadataData.pair;
 
 			if (pairs.length) {
 				const metadata: IDataObject = {};
@@ -503,10 +504,10 @@ async function updateSubmitter(this: IExecuteFunctions, i: number): Promise<IDat
 		}
 	}
 
-	const valuesData = fields.values as any;
+	const valuesData = fields.values as { pair?: Array<{ field: string; value: string }> } | undefined;
 
-	if (valuesData && valuesData.pair && Array.isArray(valuesData.pair)) {
-		const pairs = valuesData.pair as Array<{ field: string; value: string }>;
+	if (valuesData?.pair && Array.isArray(valuesData.pair)) {
+		const pairs = valuesData.pair;
 
 		if (pairs.length) {
 			const values: IDataObject = {};
@@ -519,10 +520,10 @@ async function updateSubmitter(this: IExecuteFunctions, i: number): Promise<IDat
 		}
 	}
 
-	const metadataData = fields.metadata as any;
+	const metadataData = fields.metadata as { pair?: Array<{ key: string; value: string }> } | undefined;
 
-	if (metadataData && metadataData.pair && Array.isArray(metadataData.pair)) {
-		const pairs = metadataData.pair as Array<{ key: string; value: string }>;
+	if (metadataData?.pair && Array.isArray(metadataData.pair)) {
+		const pairs = metadataData.pair;
 
 		if (pairs.length) {
 			const metadata: IDataObject = {};
@@ -575,10 +576,10 @@ function processSubmitters(this: IExecuteFunctions, i: number): IDataObject[] {
 			}
 		}
 
-		const valuesData = entry.values as any;
+		const valuesData = entry.values as { pair?: Array<{ field: string; value: string }> } | undefined;
 
-		if (valuesData && valuesData.pair && Array.isArray(valuesData.pair)) {
-			const pairs = valuesData.pair as Array<{ field: string; value: string }>;
+		if (valuesData?.pair && Array.isArray(valuesData.pair)) {
+			const pairs = valuesData.pair;
 
 			if (pairs.length) {
 				const values: IDataObject = {};
@@ -591,10 +592,10 @@ function processSubmitters(this: IExecuteFunctions, i: number): IDataObject[] {
 			}
 		}
 
-		const metadataData = entry.metadata as any;
+		const metadataData = entry.metadata as { pair?: Array<{ key: string; value: string }> } | undefined;
 
-		if (metadataData && metadataData.pair && Array.isArray(metadataData.pair)) {
-			const pairs = metadataData.pair as Array<{ key: string; value: string }>;
+		if (metadataData?.pair && Array.isArray(metadataData.pair)) {
+			const pairs = metadataData.pair;
 
 			if (pairs.length) {
 				const metadata: IDataObject = {};

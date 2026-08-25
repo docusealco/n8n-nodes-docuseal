@@ -6,7 +6,7 @@ export class DocusealOAuth2Api implements ICredentialType {
 	displayName = 'DocuSeal OAuth2 API';
 	icon: Icon = {
 		light: 'file:../nodes/Docuseal/logo.svg',
-		dark: 'file:../nodes/Docuseal/logo.svg',
+		dark: 'file:../nodes/Docuseal/logo.dark.svg',
 	};
 	documentationUrl = 'https://www.docuseal.com/docs/api';
 

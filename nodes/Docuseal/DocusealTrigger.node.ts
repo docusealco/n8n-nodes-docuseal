@@ -6,14 +6,14 @@ import type {
 	INodeTypeDescription,
 	IWebhookResponseData,
 } from 'n8n-workflow';
-
+import { NodeConnectionTypes } from 'n8n-workflow';
 import { apiRequest } from './GenericFunctions';
 
 export class DocusealTrigger implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'DocuSeal Trigger',
 		name: 'docusealTrigger',
-		icon: 'file:logo.svg',
+		icon: { light: 'file:logo.svg', dark: 'file:logo.dark.svg' },
 		group: ['trigger'],
 		version: 1,
 		subtitle: '={{$parameter["event"]}}',
@@ -22,7 +22,7 @@ export class DocusealTrigger implements INodeType {
 			name: 'DocuSeal Trigger',
 		},
 		inputs: [],
-		outputs: ['main'],
+		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
 				name: 'docusealOAuth2Api',
@@ -98,7 +98,7 @@ export class DocusealTrigger implements INodeType {
 				const webhookUrl = this.getNodeWebhookUrl('default') as string;
 				const webhooks = await apiRequest.call(this, 'GET', '/webhook_urls', {}, {});
 
-				for (const webhook of webhooks.data || []) {
+				for (const webhook of (webhooks.data ?? []) as Array<{ id: string; url: string }>) {
 					if (webhook.url === webhookUrl) {
 						webhookData.webhookId = webhook.id;
 

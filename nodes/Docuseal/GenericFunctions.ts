@@ -14,7 +14,7 @@ export async function apiRequest(
 	body: object,
 	query?: IDataObject,
 	uri?: string,
-): Promise<any> {
+): Promise<IDataObject> {
 	const authenticationMethod = this.getNodeParameter('authentication', 0) as string;
 
 	const baseUrl = await resolveBaseUrl.call(this, authenticationMethod);
@@ -55,7 +55,7 @@ async function requestWithAuth(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
 	auth: string,
 	req: IHttpRequestOptions,
-): Promise<any> {
+): Promise<IDataObject> {
 	if (auth === 'oAuth2') {
 		return this.helpers.httpRequestWithAuthentication.call(this, 'docusealOAuth2Api', req);
 	} else {

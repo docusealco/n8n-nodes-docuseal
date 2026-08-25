@@ -11,7 +11,7 @@ export class DocusealApi implements ICredentialType {
 	displayName = 'DocuSeal API';
 	icon: Icon = {
 		light: 'file:../nodes/Docuseal/logo.svg',
-		dark: 'file:../nodes/Docuseal/logo.svg',
+		dark: 'file:../nodes/Docuseal/logo.dark.svg',
 	};
 	documentationUrl = 'https://www.docuseal.com/docs/api';
 	properties: INodeProperties[] = [
